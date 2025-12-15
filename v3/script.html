@@ -1,0 +1,84 @@
+/************ FIREBASE CONFIG ************/
+const firebaseConfig = {
+  apiKey: "YOUR_API_KEY",
+  authDomain: "YOUR_PROJECT.firebaseapp.com",
+  databaseURL: "https://YOUR_PROJECT.firebaseio.com",
+  projectId: "YOUR_PROJECT"
+};
+
+firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
+
+/************ MAP ************/
+let map = L.map("map").setView([23.8103, 90.4125], 13);
+L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(map);
+
+let vehicleMarker = L.marker([23.8103, 90.4125]).addTo(map);
+
+/************ USER ID ************/
+const userId = "user_" + Math.random().toString(36).substring(2);
+
+/************ SEND GPS ************/
+if (navigator.geolocation) {
+  navigator.geolocation.watchPosition(pos => {
+    sendLocation(pos.coords.latitude, pos.coords.longitude);
+  });
+}
+
+/************ SEND LOCATION ************/
+function sendLocation(lat, lng) {
+  db.ref("reports/" + userId).set({
+    lat,
+    lng,
+    time: Date.now()
+  });
+}
+
+/************ MANUAL FALLBACK ************/
+document.getElementById("submitManual").onclick = async () => {
+  const place = document.getElementById("manualLocation").value;
+  if (!place) return;
+
+  const res = await fetch(
+    `https://nominatim.openstreetmap.org/search?format=json&q=${place}`
+  );
+  const data = await res.json();
+
+  if (!data.length) return alert("Location not found");
+
+  sendLocation(data[0].lat, data[0].lon);
+};
+
+/************ AGGREGATION LOGIC ************/
+db.ref("reports").on("value", snapshot => {
+  const reports = snapshot.val();
+  if (!reports) return;
+
+  let latSum = 0, lngSum = 0, count = 0;
+
+  Object.values(reports).forEach(r => {
+    latSum += Number(r.lat);
+    lngSum += Number(r.lng);
+    count++;
+  });
+
+  const avgLat = latSum / count;
+  const avgLng = lngSum / count;
+
+  updateVehicleLocation(avgLat, avgLng);
+});
+
+/************ UPDATE MAP + TEXT ************/
+async function updateVehicleLocation(lat, lng) {
+  vehicleMarker.setLatLng([lat, lng]);
+  map.setView([lat, lng], 15);
+
+  // Convert to readable text
+  const res = await fetch(
+    `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`
+  );
+  const data = await res.json();
+
+  document.getElementById("locationText").innerText =
+    data.display_name || "Unknown location";
+}
