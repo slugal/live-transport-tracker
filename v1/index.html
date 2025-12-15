@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Live Transport Tracker</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header>
+    <h1>Live Transport Tracker</h1>
+    <p>Track your route and input your current location in real-time.</p>
+  </header>
+
+  <div class="main-form">
+    <!-- Route Selection -->
+    <div class="route-selection">
+      <label for="route">Select Route:</label>
+      <select id="route">
+        <option value="Uttara → DSC">Uttara → DSC</option>
+        <option value="Tongi → DSC">Tongi → DSC</option>
+        <option value="Mirpur → DSC">Mirpur → DSC</option>
+        <option value="More routes coming soon...">More routes coming soon...</option>
+      </select>
+    </div>
+
+    <!-- Location Input -->
+    <div class="location-input">
+      <label for="current-location">Enter your current location:</label>
+      <input type="text" id="current-location" placeholder="e.g., Road-4, Section 5, Block 9">
+    </div>
+
+    <!-- Start Button -->
+    <button id="start-button">Start Tracking</button>
+
+    <div id="status-message" class="status-message">Your location will update every minute...</div>
+
+  </div>
+
+  <footer>
+    <p>&copy; 2025 Live Transport Tracker | All rights reserved</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
