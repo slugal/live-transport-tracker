@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Live Vehicle Tracker</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Leaflet -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css">
+
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <header>
+    <h2>🚍 Live Vehicle Tracker</h2>
+    <p>Crowd-sourced GPS tracking</p>
+  </header>
+
+  <div id="map"></div>
+
+  <!-- Text location display -->
+  <div class="info">
+    <h3>Current Vehicle Location</h3>
+    <p id="locationText">Waiting for data...</p>
+  </div>
+
+  <!-- Manual fallback -->
+  <div class="manual">
+    <input type="text" id="manualLocation" placeholder="Enter location manually">
+    <button id="submitManual">Submit</button>
+  </div>
+
+  <!-- Leaflet -->
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
