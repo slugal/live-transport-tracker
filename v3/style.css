@@ -1,0 +1,45 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #121212;
+  color: white;
+}
+
+header {
+  text-align: center;
+  padding: 10px;
+  background: #1e1e1e;
+}
+
+#map {
+  height: 60vh;
+  width: 100%;
+}
+
+.info {
+  padding: 10px;
+  background: #1a1a1a;
+  text-align: center;
+}
+
+.manual {
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+  gap: 5px;
+}
+
+input {
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  width: 60%;
+}
+
+button {
+  padding: 10px;
+  border: none;
+  background: #0066cc;
+  color: white;
+  border-radius: 5px;
+}
